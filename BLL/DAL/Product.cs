@@ -1,11 +1,15 @@
 ﻿#nullable disable
 
+using System.ComponentModel.DataAnnotations;
+
 namespace BLL.DAL
 {
     public class Product
     {
         public int Id { get; set; }
 
+        [Required]
+        [StringLength(150)]
         public string Name { get; set; }
 
         public decimal UnitPrice { get; set; }
