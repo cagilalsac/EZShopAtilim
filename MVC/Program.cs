@@ -6,7 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<Db>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Db")));
+// IoC Container:
+string connectionString = builder.Configuration.GetConnectionString("Db");
+builder.Services.AddDbContext<Db>(options => options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 
