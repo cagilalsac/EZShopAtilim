@@ -68,7 +68,7 @@ namespace BLL.Services
 
         public IQueryable<CategoryModel> Query()
         {
-            return _db.Categories.Select(c => new CategoryModel()
+            return _db.Categories.OrderBy(c => c.Name).Select(c => new CategoryModel()
             {
                 Record = c
             });
