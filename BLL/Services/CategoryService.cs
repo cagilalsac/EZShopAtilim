@@ -40,9 +40,15 @@ namespace BLL.Services
         {
             if (_db.Categories.Any(c => c.Id != record.Id && c.Name.ToUpper() == record.Name.ToUpper().Trim()))
                 return Error("Category with the same name exists!");
-            record.Name = record.Name?.Trim();
-            record.Description = record.Description?.Trim();
-            _db.Categories.Update(record);
+
+            var entity = _db.Categories.SingleOrDefault(c => c.Id == record.Id);
+            if (entity is null)
+                return Error("Category not found!");
+
+            entity.Name = record.Name?.Trim();
+            entity.Description = record.Description?.Trim();
+
+            _db.Categories.Update(entity);
             _db.SaveChanges();
             return Success("Category is updated successfully.");
         }

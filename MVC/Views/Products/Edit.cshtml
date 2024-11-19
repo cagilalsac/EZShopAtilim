@@ -1,4 +1,4 @@
-﻿@model CategoryModel
+﻿@model ProductModel
 
 @* Generated from Custom Template. *@
 @* Model namespace using directive should be added to _ViewImports.cshtml. *@
@@ -8,7 +8,7 @@
     var dateTimePickerClass = "datetimepicker";
 }
 @{
-    ViewData["Title"] = "Category Edit";
+    ViewData["Title"] = "Product Edit";
 }
 
 <div class="@containerDivClass">
@@ -37,11 +37,34 @@
 	        </div>
         </div>
         <div class="row mb-3">
-            <label asp-for="Description" class="col-2 col-form-label fw-bold"></label>
+            <label asp-for="UnitPrice" class="col-2 col-form-label fw-bold"></label>
 	        <div class="col-10">
-                <textarea asp-for="Record.Description" class="form-control" rows="3"></textarea>
-		        <span asp-validation-for="Record.Description" class="text-danger"></span>
+	            <input asp-for="Record.UnitPrice" class="form-control" />
+		        <span asp-validation-for="Record.UnitPrice" class="text-danger"></span>
 	        </div>
+        </div>
+        <div class="row mb-3">
+            <label asp-for="StockAmount" class="col-2 col-form-label fw-bold"></label>
+	        <div class="col-10">
+	            <input asp-for="Record.StockAmount" class="form-control" />
+		        <span asp-validation-for="Record.StockAmount" class="text-danger"></span>
+	        </div>
+        </div>
+        <div class="row mb-3">
+            <label asp-for="ExpirationDate" class="col-2 col-form-label fw-bold"></label>
+	        <div class="col-10">
+		        <input asp-for="Record.ExpirationDate" class="form-control @dateTimePickerClass" type="text" />
+		        <span asp-validation-for="Record.ExpirationDate" class="text-danger"></span>
+	        </div>
+        </div>
+        <div class="row mb-3">
+            <label asp-for="Category" class="col-2 col-form-label fw-bold"></label>
+            <div class="col-10">
+	            <select asp-for="Record.CategoryId" class="form-select" asp-items="ViewBag.CategoryId">
+		            <option value="">-- Select --</option>
+	            </select>
+	            <span asp-validation-for="Record.CategoryId" class="text-danger"></span>
+            </div>
         </div>
 
 @* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. *@
@@ -69,4 +92,8 @@
         </div>
     </form>
 </div>
+}
+
+@section Scripts {
+    <partial name="_DateTimePicker" />
 }
