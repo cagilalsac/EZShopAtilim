@@ -7,6 +7,6 @@
         public IQueryable<TModel> Query();
         public Service Create(TEntity record);
         public Service Update(TEntity record);
-        public int Delete(int id);
+        public Service Delete(int id);
     }
 }

@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BLL.Controllers.Bases;
 using BLL.Services;
 using BLL.Models;
+using BLL.DAL;
+using BLL.Services.Bases;
 
 // Generated from Custom Template.
 
@@ -12,14 +14,14 @@ namespace MVC.Controllers
     public class ProductsController : MvcController
     {
         // Service injections:
-        private readonly IProductService _productService;
+        private readonly IService<Product, ProductModel> _productService;
         private readonly ICategoryService _categoryService;
 
         /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
         //private readonly IManyToManyRecordService _ManyToManyRecordService;
 
         public ProductsController(
-			IProductService productService
+            IService<Product, ProductModel> productService
             , ICategoryService categoryService
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */

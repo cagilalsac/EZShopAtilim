@@ -1,0 +1,22 @@
+﻿@*
+	Common structures such as calendar, drop down list, list box, paging, etc. can be created as partial views in the Shared folder
+	therefore these can be used in any view's Scripts section as partial views when needed.
+*@
+
+@* https://xdsoft.net/jqplugins/datetimepicker *@
+<link rel="stylesheet" href="~/lib/jquery-datetimepicker/jquery.datetimepicker.min.css" />
+<script src="~/lib/jquery-datetimepicker/jquery.datetimepicker.full.min.js"></script>
+
+<script>
+	@* jQuery: *@
+	$(function () { // after the HTML DOM is loaded
+		$('.datetimepicker').datetimepicker({ // convert the inputs with CSS class "datetimepicker" to jquery-datetimepicker
+			timepicker: true, // show the time component
+			format: 'm/d/Y H:i' // month/day/year hour:minute format
+		});
+		$('.datepicker').datetimepicker({ // convert the inputs with CSS class "datepicker" to jquery-datetimepicker
+			timepicker: false, // don't show the time component
+			format: 'm/d/Y' // month/day/year format
+		});
+	});
+</script>
