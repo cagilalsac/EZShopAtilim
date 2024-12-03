@@ -39,5 +39,7 @@ namespace BLL.Models
         public string ExpirationDate => Record.ExpirationDate.HasValue ? Record.ExpirationDate.Value.ToString("MM/dd/yyyy") : string.Empty;
 
         public string Category => Record.Category?.Name;
+
+        public string Stores => string.Join("<br>", Record.ProductStores?.Select(ps => ps.Store.Name));
     }
 }

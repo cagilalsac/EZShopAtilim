@@ -15,17 +15,25 @@ namespace MVC.Controllers
     {
         // Service injections:
         private readonly IService<Product, ProductModel> _productService;
-        private readonly ICategoryService _categoryService;
+
+        // Way 1:
+        //private readonly ICategoryService _categoryService;
+        // Way 2:
+        private readonly IService<Category, CategoryModel> _categoryService;
 
         /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
         //private readonly IManyToManyRecordService _ManyToManyRecordService;
 
         public ProductsController(
-            IService<Product, ProductModel> productService
-            , ICategoryService categoryService
+            IService<Product, ProductModel> productService,
 
-            /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
-            //, IManyToManyRecordService ManyToManyRecordService
+            // Way 1:
+            //ICategoryService categoryService
+            // Way 2:
+            IService<Category, CategoryModel> categoryService
+
+        /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
+        //, IManyToManyRecordService ManyToManyRecordService
         )
         {
             _productService = productService;

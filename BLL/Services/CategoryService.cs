@@ -5,15 +5,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BLL.Services
 {
-    public interface ICategoryService
-    {
-        public IQueryable<CategoryModel> Query();
-        public Service Create(Category record);
-        public Service Update(Category record);
-        public Service Delete(int id);
-    }
+    // Way 1:
+    //public interface ICategoryService
+    //{
+    //    public IQueryable<CategoryModel> Query();
+    //    public Service Create(Category record);
+    //    public Service Update(Category record);
+    //    public Service Delete(int id);
+    //}
 
-    public class CategoryService : Service, ICategoryService
+    // Way 1:
+    //public class CategoryService : Service, ICategoryService
+    // Way 2:
+    public class CategoryService : Service, IService<Category, CategoryModel>
     {
         public CategoryService(Db db) : base(db)
         {

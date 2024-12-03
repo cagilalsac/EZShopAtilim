@@ -25,7 +25,8 @@ namespace BLL.Services
 
         public IQueryable<ProductModel> Query()
         {
-            return _db.Products.Include(p => p.Category).OrderBy(p => p.StockAmount).ThenByDescending(p => p.ExpirationDate).ThenBy(p => p.Name).Select(p => new ProductModel() { Record = p });
+            return _db.Products.Include(p => p.Category).Include(p => p.ProductStores).ThenInclude(ps => ps.Store)
+                .OrderBy(p => p.StockAmount).ThenByDescending(p => p.ExpirationDate).ThenBy(p => p.Name).Select(p => new ProductModel() { Record = p });
         }
 
         public Service Create(Product record)

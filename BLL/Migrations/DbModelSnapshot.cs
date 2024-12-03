@@ -17,7 +17,7 @@ namespace BLL.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.10")
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -75,6 +75,50 @@ namespace BLL.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("BLL.DAL.ProductStore", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StoreId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("StoreId");
+
+                    b.ToTable("ProductStores");
+                });
+
+            modelBuilder.Entity("BLL.DAL.Store", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsVirtual")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Stores");
+                });
+
             modelBuilder.Entity("BLL.DAL.Product", b =>
                 {
                     b.HasOne("BLL.DAL.Category", "Category")
@@ -86,9 +130,38 @@ namespace BLL.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("BLL.DAL.ProductStore", b =>
+                {
+                    b.HasOne("BLL.DAL.Product", "Product")
+                        .WithMany("ProductStores")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BLL.DAL.Store", "Store")
+                        .WithMany("ProductStores")
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Store");
+                });
+
             modelBuilder.Entity("BLL.DAL.Category", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("BLL.DAL.Product", b =>
+                {
+                    b.Navigation("ProductStores");
+                });
+
+            modelBuilder.Entity("BLL.DAL.Store", b =>
+                {
+                    b.Navigation("ProductStores");
                 });
 #pragma warning restore 612, 618
         }

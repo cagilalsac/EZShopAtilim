@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BLL.Services;
 using BLL.Models;
 using BLL.Controllers.Bases;
+using BLL.Services.Bases;
+using BLL.DAL;
 
 // Generated from Custom Template.
 
@@ -12,13 +14,19 @@ namespace MVC.Controllers
     public class CategoriesController : MvcController
     {
         // Service injections:
-        private readonly ICategoryService _categoryService;
+        // Way 1:
+        //private readonly ICategoryService _categoryService;
+        // Way 2:
+        private readonly IService<Category, CategoryModel> _categoryService;
 
         /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
         //private readonly IManyToManyRecordService _ManyToManyRecordService;
 
         public CategoriesController(
-			ICategoryService categoryService
+            // Way 1:
+			//ICategoryService categoryService
+            // Way 2:
+            IService<Category, CategoryModel> categoryService
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
             //, IManyToManyRecordService ManyToManyRecordService

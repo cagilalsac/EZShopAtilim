@@ -12,12 +12,18 @@ builder.Services.AddControllersWithViews();
 // IoC Container:
 string connectionString = builder.Configuration.GetConnectionString("Db");
 builder.Services.AddDbContext<Db>(options => options.UseSqlServer(connectionString));
-builder.Services.AddScoped<ICategoryService, CategoryService>();
+
+// Way 1:
+//builder.Services.AddScoped<ICategoryService, CategoryService>();
+// Way 2:
+builder.Services.AddScoped<IService<Category, CategoryModel>, CategoryService>();
 
 // Way 1:
 //builder.Services.AddScoped<IProductService, ProductService>();
 // Way 2:
 builder.Services.AddScoped<IService<Product, ProductModel>, ProductService>();
+
+builder.Services.AddScoped<IService<Store, StoreModel>, StoreService>();
 
 var app = builder.Build();
 
