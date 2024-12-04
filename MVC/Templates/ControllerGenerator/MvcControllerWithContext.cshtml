@@ -14,8 +14,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
     foreach (var namespaceName in Model.RequiredNamespaces)
     {
 @:using @(namespaceName.Remove(namespaceName.LastIndexOf('.')) + ".Controllers.Bases");
-@:using @(namespaceName.Remove(namespaceName.LastIndexOf('.')) + ".Services");
+@:using @(namespaceName.Remove(namespaceName.LastIndexOf('.')) + ".Services.Bases");
 @:using @(namespaceName.Remove(namespaceName.LastIndexOf('.')) + ".Models");
+@:using @(namespaceName.Remove(namespaceName.LastIndexOf('.')) + ".DAL");
     }
 }
 
@@ -72,7 +73,7 @@ namespace @Model.ControllerNamespace
     }
 
     var modelType = Model.ModelTypeName + "Model";
-    var serviceAbstractType = "I" + Model.ModelTypeName + "Service";
+    var serviceAbstractType = "IService<" + Model.ModelTypeName + ", " + modelType + ">";
     var serviceAbstractName = Model.ModelVariable + "Service";
 }
     public class @Model.ControllerName : MvcController
@@ -81,20 +82,20 @@ namespace @Model.ControllerNamespace
         private readonly @serviceAbstractType @("_" + serviceAbstractName);
 @foreach (var relatedProperty in relatedProperties.Keys)
 {
-        @:private readonly I@(relatedProperty + "Service _" + relatedProperty.Substring(0, 1).ToLower() + relatedProperty.Substring(1) + "Service");
+        @:private readonly IService<@relatedProperty, @(relatedProperty + "Model")> _@(relatedProperty.Substring(0, 1).ToLower() + relatedProperty.Substring(1) + "Service");
 }
 
-        /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
-        //private readonly IManyToManyRecordService _ManyToManyRecordService;
+        /* Can be uncommented and used for many to many relationships. {Entity} may be replaced with the related entiy name in the controller and views. */
+        //private readonly IService<{Entity}, {Entity}Model> _{Entity}Service;
 
         public @(Model.ControllerName + "(\n\t\t\t" + serviceAbstractType + " " + serviceAbstractName)
 @foreach (var relatedProperty in relatedProperties.Keys)
 {
-            @:, I@(relatedProperty + "Service " + relatedProperty.Substring(0, 1).ToLower() + relatedProperty.Substring(1) + "Service")
+            @:@(", IService<" + relatedProperty + ", " + relatedProperty + "Model> " + relatedProperty.Substring(0, 1).ToLower() + relatedProperty.Substring(1) + "Service")
 }
 
-            /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
-            //, IManyToManyRecordService ManyToManyRecordService
+            /* Can be uncommented and used for many to many relationships. {Entity} may be replaced with the related entiy name in the controller and views. */
+            //, Service<{Entity}, {Entity}Model> {Entity}Service
         )
         {
             @("_" + serviceAbstractName) = @serviceAbstractName;
@@ -103,8 +104,8 @@ namespace @Model.ControllerNamespace
             @:@("_" + relatedProperty.Substring(0, 1).ToLower() + relatedProperty.Substring(1) + "Service = " + relatedProperty.Substring(0, 1).ToLower() + relatedProperty.Substring(1) + "Service");
 }
 
-            /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
-            //_ManyToManyRecordService = ManyToManyRecordService;
+            /* Can be uncommented and used for many to many relationships. {Entity} may be replaced with the related entiy name in the controller and views. */
+            //_{Entity}Service = {Entity}Service;
         }
 
         // GET: @routePrefix
@@ -133,8 +134,8 @@ namespace @Model.ControllerNamespace
     }
 }           
             
-            /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
-            //ViewBag.ManyToManyRecordIds = new MultiSelectList(_ManyToManyRecordService.Query().ToList(), "Record.Id", "Name");
+            /* Can be uncommented and used for many to many relationships. {Entity} may be replaced with the related entiy name in the controller and views. */
+            //ViewBag.{Entity}Ids = new MultiSelectList(_{Entity}Service.Query().ToList(), "Record.Id", "Name");
         }
 
         // GET: @routePrefix/Create

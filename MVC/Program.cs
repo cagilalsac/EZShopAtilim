@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 // IoC Container:
-string connectionString = builder.Configuration.GetConnectionString("Db");
+string connectionString = builder.Configuration.GetConnectionString("Db"); // TODO: DB Name Change
 builder.Services.AddDbContext<Db>(options => options.UseSqlServer(connectionString));
 
 // Way 1:

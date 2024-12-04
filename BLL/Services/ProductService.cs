@@ -62,7 +62,7 @@ namespace BLL.Services
             var entity = _db.Products.SingleOrDefault(p => p.Id == record.Id);
             if (entity is null)
                 return Error("Product not found!");
-
+            // TODO: ProductStores remove
             entity.Name = record.Name?.Trim();
             entity.UnitPrice = record.UnitPrice;
             entity.StockAmount = record.StockAmount;
@@ -79,7 +79,7 @@ namespace BLL.Services
             var entity = _db.Products.SingleOrDefault(p => p.Id == id);
             if (entity is null)
                 return Error("Product not found!");
-
+            // TODO: ProductStores remove
             _db.Products.Remove(entity);
             _db.SaveChanges();
             return Success("Product deleted successfully.");

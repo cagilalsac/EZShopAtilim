@@ -124,13 +124,13 @@ foreach (var property in Model.ModelMetadata.Properties)
     }
 }
 @:
-@:@@* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. *@@
+@:@@* Can be uncommented and used for many to many relationships. {Entity} may be replaced with the related entiy name in the controller and views. *@@
         @:@@*
         @:<div class="row mb-3">
-            @:<label asp-for="ManyToManyRecordIds" class="col-2 col-form-label fw-bold"></label>
+            @:<label asp-for="{Entity}Ids" class="col-2 col-form-label fw-bold"></label>
 	        @:<div class="col-10">
-		        @:<select multiple asp-for="ManyToManyRecordIds" class="form-select" asp-items="ViewBag.ManyToManyRecordIds"></select>
-		        @:<span asp-validation-for="ManyToManyRecordIds" class="text-danger"></span>
+		        @:<select multiple asp-for="{Entity}Ids" class="form-select" asp-items="ViewBag.{Entity}Ids"></select>
+		        @:<span asp-validation-for="{Entity}Ids" class="text-danger"></span>
 	        @:</div>
         @:</div>
         @:*@@
