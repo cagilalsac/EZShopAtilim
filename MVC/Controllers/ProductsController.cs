@@ -22,7 +22,7 @@ namespace MVC.Controllers
         private readonly IService<Category, CategoryModel> _categoryService;
 
         /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
-        //private readonly IManyToManyRecordService _ManyToManyRecordService;
+        private readonly IService<Store, StoreModel> _storeService;
 
         public ProductsController(
             IService<Product, ProductModel> productService,
@@ -33,14 +33,14 @@ namespace MVC.Controllers
             IService<Category, CategoryModel> categoryService
 
         /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
-        //, IManyToManyRecordService ManyToManyRecordService
+        , IService<Store, StoreModel> storeService
         )
         {
             _productService = productService;
             _categoryService = categoryService;
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
-            //_ManyToManyRecordService = ManyToManyRecordService;
+            _storeService = storeService;
         }
 
         // GET: Products
@@ -63,9 +63,9 @@ namespace MVC.Controllers
         {
             // Related items service logic to set ViewData (Record.Id and Name parameters may need to be changed in the SelectList constructor according to the model):
             ViewData["CategoryId"] = new SelectList(_categoryService.Query().ToList(), "Record.Id", "Name");
-            
+
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
-            //ViewBag.ManyToManyRecordIds = new MultiSelectList(_ManyToManyRecordService.Query().ToList(), "Record.Id", "Name");
+            ViewBag.StoreIds = new MultiSelectList(_storeService.Query().ToList(), "Record.Id", "Name");
         }
 
         // GET: Products/Create

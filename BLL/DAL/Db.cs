@@ -9,6 +9,9 @@ namespace BLL.DAL
         public DbSet<Store> Stores { get; set; }
         public DbSet<ProductStore> ProductStores { get; set; }
 
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+
         public Db(DbContextOptions<Db> options) : base(options)
         {
         }

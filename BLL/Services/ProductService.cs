@@ -59,15 +59,19 @@ namespace BLL.Services
             //    return Error("Unit price must be a positive number!");
             // Way 2: Validation can also be made using entity data annotations
 
-            var entity = _db.Products.SingleOrDefault(p => p.Id == record.Id);
+            var entity = _db.Products.Include(p => p.ProductStores).SingleOrDefault(p => p.Id == record.Id);
             if (entity is null)
                 return Error("Product not found!");
-            // TODO: ProductStores remove
+
+            _db.ProductStores.RemoveRange(entity.ProductStores);
+
             entity.Name = record.Name?.Trim();
             entity.UnitPrice = record.UnitPrice;
             entity.StockAmount = record.StockAmount;
             entity.ExpirationDate = record.ExpirationDate;
             entity.CategoryId = record.CategoryId;
+
+            entity.ProductStores = record.ProductStores;
 
             _db.Products.Update(entity);
             _db.SaveChanges();
@@ -76,10 +80,12 @@ namespace BLL.Services
 
         public Service Delete(int id)
         {
-            var entity = _db.Products.SingleOrDefault(p => p.Id == id);
+            var entity = _db.Products.Include(p => p.ProductStores).SingleOrDefault(p => p.Id == id);
             if (entity is null)
                 return Error("Product not found!");
-            // TODO: ProductStores remove
+            
+            _db.ProductStores.RemoveRange(entity.ProductStores);
+
             _db.Products.Remove(entity);
             _db.SaveChanges();
             return Success("Product deleted successfully.");
