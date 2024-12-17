@@ -1,7 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
-    string title = "EZ-Shop";
-    var description = "Easy Shopping";
+    string title = "Welcome to " + AppSettings.Title + " " + 
+        (User.Identity.IsAuthenticated ? User.Identity.Name : "Guest");
+    var description = AppSettings.Description;
 }
 
 <div class="text-center">

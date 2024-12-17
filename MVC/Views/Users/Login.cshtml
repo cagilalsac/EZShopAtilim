@@ -6,6 +6,11 @@
 
 <h3>@ViewBag.Title</h3>
 
+@if (ViewBag.Message is not null)
+{
+    <p class="text-danger">@ViewBag.Message</p>
+}
+
 <form asp-action="Login">
     @Html.AntiForgeryToken()
     <div class="row">

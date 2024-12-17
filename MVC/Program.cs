@@ -2,6 +2,7 @@ using BLL.DAL;
 using BLL.Models;
 using BLL.Services;
 using BLL.Services.Bases;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +26,22 @@ builder.Services.AddScoped<IService<Product, ProductModel>, ProductService>();
 
 builder.Services.AddScoped<IService<Store, StoreModel>, StoreService>();
 
+builder.Services.AddScoped<IService<User, UserModel>, UserService>();
+
+// Authentication:
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Users/Login";
+        options.AccessDeniedPath = "/Users/Login";
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+        options.SlidingExpiration = true;
+    });
+
+// AppSettings:
+var section = builder.Configuration.GetSection(nameof(AppSettings));
+section.Bind(new AppSettings());
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -39,6 +56,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+// Authentication:
+app.UseAuthentication();
 
 app.UseAuthorization();
 
