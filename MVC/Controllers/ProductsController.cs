@@ -6,11 +6,13 @@ using BLL.Services;
 using BLL.Models;
 using BLL.DAL;
 using BLL.Services.Bases;
+using Microsoft.AspNetCore.Authorization;
 
 // Generated from Custom Template.
 
 namespace MVC.Controllers
 {
+    [Authorize]
     public class ProductsController : MvcController
     {
         // Service injections:
@@ -44,6 +46,7 @@ namespace MVC.Controllers
         }
 
         // GET: Products
+        [AllowAnonymous]
         public IActionResult Index()
         {
             // Get collection service logic:
@@ -125,6 +128,7 @@ namespace MVC.Controllers
         }
 
         // GET: Products/Delete/5
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             // Get item to delete service logic:
@@ -135,8 +139,14 @@ namespace MVC.Controllers
         // POST: Products/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        // Way 1:
+        //[Authorize(Roles = "Admin")]
         public IActionResult DeleteConfirmed(int id)
         {
+            // Way 2:
+            if (!User.IsInRole("Admin"))
+                return RedirectToAction("Login", "Users");
+
             // Delete item service logic:
             var result = _productService.Delete(id);
             TempData["Message"] = result.Message;

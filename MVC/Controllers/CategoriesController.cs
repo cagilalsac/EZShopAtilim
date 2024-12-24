@@ -6,11 +6,14 @@ using BLL.Models;
 using BLL.Controllers.Bases;
 using BLL.Services.Bases;
 using BLL.DAL;
+using Microsoft.AspNetCore.Authorization;
 
 // Generated from Custom Template.
 
 namespace MVC.Controllers
 {
+    // Way 2:
+    [Authorize(Roles = "Admin")]
     public class CategoriesController : MvcController
     {
         // Service injections:
@@ -39,6 +42,8 @@ namespace MVC.Controllers
         }
 
         // GET: Categories
+        // Way 1:
+        //[Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             // Get collection service logic:
@@ -47,6 +52,8 @@ namespace MVC.Controllers
         }
 
         // GET: Categories/Details/5
+        // Way 1:
+        //[Authorize(Roles = "Admin")]
         public IActionResult Details(int id)
         {
             // Get item service logic:
@@ -63,6 +70,8 @@ namespace MVC.Controllers
         }
 
         // GET: Categories/Create
+        // Way 1:
+        //[Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             SetViewData();
@@ -72,6 +81,8 @@ namespace MVC.Controllers
         // POST: Categories/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        // Way 1:
+        //[Authorize(Roles = "Admin")]
         public IActionResult Create(CategoryModel category)
         {
             if (ModelState.IsValid)
@@ -90,6 +101,8 @@ namespace MVC.Controllers
         }
 
         // GET: Categories/Edit/5
+        // Way 1:
+        //[Authorize(Roles = "Admin")]
         public IActionResult Edit(int id)
         {
             // Get item to edit service logic:
@@ -101,6 +114,8 @@ namespace MVC.Controllers
         // POST: Categories/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
+        // Way 1:
+        //[Authorize(Roles = "Admin")]
         public IActionResult Edit(CategoryModel category)
         {
             if (ModelState.IsValid)
@@ -119,6 +134,8 @@ namespace MVC.Controllers
         }
 
         // GET: Categories/Delete/5
+        // Way 1:
+        //[Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             // Get item to delete service logic:
@@ -129,6 +146,8 @@ namespace MVC.Controllers
         // POST: Categories/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        // Way 1:
+        //[Authorize(Roles = "Admin")]
         public IActionResult DeleteConfirmed(int id)
         {
             // Delete item service logic:

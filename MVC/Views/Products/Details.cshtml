@@ -78,8 +78,16 @@
    
 
     <hr /> 
-    <a asp-action="Edit" asp-route-id="@Model.Record.Id">Edit</a>&nbsp;|&nbsp;
-    <a asp-action="Delete" asp-route-id="@Model.Record.Id">Delete</a>&nbsp;|&nbsp;
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Record.Id">Edit</a>
+        if (User.IsInRole("Admin"))
+        {
+            @:&nbsp;|&nbsp;
+            <a asp-action="Delete" asp-route-id="@Model.Record.Id">Delete</a>
+        }
+    }
+    &nbsp;|&nbsp;
     <a asp-action="Index">Back to List</a>
 </div>
 }

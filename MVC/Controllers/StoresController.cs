@@ -5,11 +5,13 @@ using BLL.Controllers.Bases;
 using BLL.Services.Bases;
 using BLL.Models;
 using BLL.DAL;
+using Microsoft.AspNetCore.Authorization;
 
 // Generated from Custom Template.
 
 namespace MVC.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class StoresController : MvcController
     {
         // Service injections:
